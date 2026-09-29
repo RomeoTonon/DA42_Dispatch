@@ -254,10 +254,7 @@ footer.site .disc b{color:var(--warn)}
   <div class="card" style="margin-bottom:16px">
     <div class="row" style="justify-content:space-between">
       <div><h2 style="margin:0">Performance</h2><p class="hint" style="margin-top:4px" id="perf-mass"></p></div>
-      <div class="row">
-        <label class="check"><input type="checkbox" data-k="windFactor"> Factor wind (50 % headwind, 150 % tailwind)</label>
-        <label class="f" style="min-width:230px">CheckWX API key (optional override, this device)<div class="inp"><input data-k="cwxKey" type="password" autocomplete="off" placeholder="built-in key in use"></div></label>
-      </div>
+      <label class="check"><input type="checkbox" data-k="windFactor"> Factor wind (50 % headwind, 150 % tailwind)</label>
     </div>
   </div>
   <div class="grid g3" id="ads"></div>
@@ -899,7 +896,7 @@ function applyMetar(k, text, keepIcao){
   const ta = document.querySelector(`[data-metar="${k}"]`); if (ta.value !== text) ta.value = text;
 }
 // ---------- live weather ----------
-// CheckWX key used for every visitor of this site (free plan: https://www.checkwxapi.com).
+// CheckWX key shared by every visitor of this site.
 const CHECKWX_KEY = '61677bbc2873479cb4511c03e29fbfa0';
 const AWC = (kind, ids) => `https://aviationweather.gov/api/data/${kind}?ids=${ids.join(',')}&format=raw`;
 const firstReport = (kind, raw, icao) => {
@@ -910,7 +907,7 @@ const firstReport = (kind, raw, icao) => {
   return hit ? hit.replace(/^(METAR|SPECI)\s+/,'') : '';
 };
 function wxSources(kind){
-  const key = (S.cwxKey || CHECKWX_KEY).trim(), L = [];
+  const key = CHECKWX_KEY, L = [];
   if (key) L.push({ name:'CheckWX', url: ids => `https://api.checkwx.com/${kind}/${ids.join(',')}`, headers:{ 'X-API-Key': key },
     parse: (t, ids) => { const d = (JSON.parse(t).data || []).map(String); const o = {}; ids.forEach(i => { const r = d.find(x => firstReport(kind, x, i)); if (r) o[i] = firstReport(kind, r, i); }); return o; } });
   const awcParse = (t, ids) => { const o = {}; ids.forEach(i => { const r = firstReport(kind, t, i); if (r) o[i] = r; }); return o; };
