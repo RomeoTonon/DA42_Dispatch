@@ -4,13 +4,6 @@ Mass & balance, performance and briefing pack for the NewCAG DA42 fleet (F-GUPM,
 
 Everything is in one file, `index.html`: the AFM chart data, the airport/runway database (OurAirports), the NewCAG form pages and the Diamond chart images are embedded. No build step and no server code.
 
-## Host on GitHub Pages
-1. Create a repository and upload `index.html`, `.nojekyll` and this README to the root.
-2. Settings → Pages → Source: *Deploy from a branch*, branch `main`, folder `/ (root)`.
-3. The site is served at `https://<user>.github.io/<repo>/`.
-
-Any static host works the same way (Netlify, Cloudflare Pages, a school web server): serve `index.html`.
-
 ## Notes
 - **Live METAR** uses `https://aviationweather.gov/api/data/metar`. If the browser blocks the request, the page falls back to the "Open METAR/TAF" link and paste box.
 - **Fleet map** embeds ADS-B Exchange (`globe.adsbexchange.com`). If ADS-B Exchange refuses to be shown inside another site, the Flightradar24 / FlightAware / ADS-B Exchange buttons still open each aircraft in a new tab.
